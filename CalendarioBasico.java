@@ -10,20 +10,20 @@
 public class CalendarioBasico
 {
     // El día establecido en el calendario en valor numérico o entero.
-    private int day;
+    private DisplayDosCaracteres day;
     // El mes establecido en el calendario en valor numérico o entero.
-    private int month;
+    private DisplayDosCaracteres month;
     // El año establecido en el calendario en valor numérico o entero.
-    private int year;
+    private DisplayDosCaracteres year;
 
     /**
      * El constructor del calendario, creará la fecha por defecto 01-01-01
      */
     public CalendarioBasico()
     {
-        day = 01;
-        month = 01;
-        year = 2001;
+        day = new DisplayDosCaracteres(31);
+        month = new DisplayDosCaracteres(13);
+        year = new DisplayDosCaracteres(2100);             
     }
 
     /**
@@ -31,14 +31,12 @@ public class CalendarioBasico
      */
     public void avanzarFecha()
     {
-        day += 1;
-        if (day > 30) {
-            month += 1;
-            day = 01;
-        }
-        if (month > 12) {
-            year += 1;
-            month = 01;
+        day.incrementaValorAlmacenado();
+        if (day.getValorAlmacenado() == 1) {
+            month.incrementaValorAlmacenado();
+            if (month.getValorAlmacenado() == 1) {
+                year.incrementaValorAlmacenado();
+            }
         }
     }
 
@@ -47,9 +45,9 @@ public class CalendarioBasico
      */
     public void fijarFecha(int dia, int mes, int ano)
     {
-        day = dia;
-        month = mes;
-        year = ano;
+        day.setValorAlmacenado(dia);
+        month.setValorAlmacenado(mes);
+        year.setValorAlmacenado(ano);
     }
 
     /**
@@ -58,17 +56,10 @@ public class CalendarioBasico
      */
     public String obtenerFecha()
     {
-        String dosNumDay = String.valueOf(day);
-        String dosNumMonth = String.valueOf(month);
-        String dosNumYear = String.valueOf(year);
-        if (dosNumDay.length() < 2) {
-            dosNumDay = "0" + String.valueOf(day);
-        }
-        if (dosNumMonth.length() < 2) {
-            dosNumMonth = "0" + String.valueOf(month);
-        }
-        return dosNumDay + "-" + dosNumMonth + "-" + dosNumYear.substring(2,4);
-
+        day.getTextoDelDisplay();
+        month.getTextoDelDisplay();
+        year.getTextoDelDisplay();
+        return day.getTextoDelDisplay() + "-" + month.getTextoDelDisplay() + "-" + year.getTextoDelDisplay();
     }
 
 }
